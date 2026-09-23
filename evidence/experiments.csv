@@ -1,0 +1,3 @@
+experiment,status,train_per_class,epochs,batch_size,learning_rate,variation,validation_total,validation_top1_accuracy,coverage,notes
+E1,PLANNED,50,50,16,0.001,baseline,,,,Isi nilai sebenar selepas latihan dan penilaian
+E2,PLANNED,100,50,16,0.001,lebih banyak sudut cahaya dan latar,,,,Isi nilai sebenar selepas latihan dan penilaian

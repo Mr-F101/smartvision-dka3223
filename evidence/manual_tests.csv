@@ -1,0 +1,13 @@
+id,scenario,expected,actual,status,evidence_file
+UI01,Load tanpa fail model,Mesej model belum tersedia,,NOT_RUN,
+UI02,Kamera dibenarkan,Preview dan ramalan sebenar,,NOT_RUN,
+UI03,Kamera ditolak,Mesej ralat dan boleh cuba semula,,NOT_RUN,
+UI04,Upload imej sah,Prediction dan confidence,,NOT_RUN,
+UI05,Fail rosak,Mesej ralat,,NOT_RUN,
+UI06,Reset,Kamera berhenti dan hasil dikosongkan,,NOT_RUN,
+UI07,Confidence bawah threshold,UNKNOWN,,NOT_RUN,
+UI08,Objek luar skop,Rekod jika model salah walaupun confidence tinggi,,NOT_RUN,
+API01,POST predict model sebenar,200 dan JSON,,NOT_RUN,
+API02,Fail kosong,400,,NOT_RUN,
+API03,Fail terlalu besar,413,,NOT_RUN,
+API04,Threshold di luar julat,422,,NOT_RUN,
