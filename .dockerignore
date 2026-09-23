@@ -1,0 +1,9 @@
+.venv
+.git
+__pycache__
+.pytest_cache
+dataset
+evidence
+docs
+tests
+*.zip
