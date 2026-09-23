@@ -25,6 +25,7 @@ class Score(BaseModel):
 
 
 class Prediction(BaseModel):
+    model_id: str
     prediction: str
     top_class: str
     confidence: float = Field(ge=0, le=1)
@@ -65,7 +66,8 @@ def home():
 def health():
     model = app.state.classifier
     return {'status': 'ok', 'model_ready': model is not None,
-            'message': app.state.model_message, 'labels': model.labels if model else []}
+            'message': app.state.model_message, 'labels': model.labels if model else [],
+            'model_id': model.model_id if model else None}
 
 
 def decode_image(data):
@@ -98,6 +100,8 @@ async def predict(file: Annotated[UploadFile, File()],
     try:
         if app.state.classifier is None:
             raise HTTPException(503, app.state.model_message)
-        return await run_in_threadpool(app.state.classifier.predict, image, threshold)
+        model = app.state.classifier
+        result = await run_in_threadpool(model.predict, image, threshold)
+        return {**result, 'model_id': model.model_id}
     finally:
         image.close()

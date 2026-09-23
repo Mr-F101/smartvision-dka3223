@@ -4,7 +4,9 @@ Projek kumpulan Muhammad Faris Bin Mohd Fuad, AIEREL dan HAIRIS. Kelas 2 DVM IPD
 
 ## Apa yang telah disediakan
 
-Kod aplikasi dua mod (pelayar dan Python), panduan 12 fasa, backend FastAPI/Pydantic, skrip penilaian, ujian kod, draf laporan 10 muka surat dan slaid 12 halaman. Sebelas ujian kod lulus.
+Kod aplikasi dua mod (pelayar dan Python), panduan 12 fasa, backend FastAPI/Pydantic, skrip penilaian dan perbandingan E1/E2, ujian kod, draf laporan 10 muka surat dan slaid 12 halaman. Lapan belas ujian kod lulus.
+
+**Tindakan anda sekarang:** buka `docs/TINDAKAN_ANDA.md`. Utamakan gambar sebenar dan maklumat ahli yang belum lengkap. Saya boleh menyambung analisis serta melengkapkan hasil laporan selepas input tersebut tersedia.
 
 ## Apa yang belum selesai
 

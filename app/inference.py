@@ -2,6 +2,7 @@
 from pathlib import Path
 import re
 import threading
+import hashlib
 import numpy as np
 from PIL import Image, ImageOps
 
@@ -45,6 +46,7 @@ class TFLiteClassifier:
             raise FileNotFoundError('Letak model_unquant.tflite dan labels.txt di models/tflite, kemudian mula semula server.')
         import tensorflow as tf
         self.labels = read_labels(labels_path)
+        self.model_id = hashlib.sha256(model_path.read_bytes() + b'\0' + labels_path.read_bytes()).hexdigest()
         self.interpreter = tf.lite.Interpreter(model_path=str(model_path), num_threads=2)
         self.interpreter.allocate_tensors()
         inputs = self.interpreter.get_input_details()

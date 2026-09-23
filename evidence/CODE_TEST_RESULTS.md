@@ -2,7 +2,9 @@
 
 Tarikh: 23 September 2026. Persekitaran: Windows, Python 3.12.14.
 
-**11 ujian lulus.** Arahan: `python -m pytest tests -q -p no:cacheprovider --tb=short`.
+**18 ujian lulus.** Arahan: `python -m pytest tests -q -p no:cacheprovider --tb=short`.
+
+Tambahan semakan: cap jari model dalam respons API, perbandingan eksperimen yang sepadan, penolakan model sama, threshold berlainan, dataset berlainan, jumlah tidak sah, metrik NaN dan keadaan tiada ramalan diterima. Data ujian ini sintetik untuk semakan perisian sahaja.
 
 Liputan: halaman utama dan health, keadaan tiada model (503), fail kosong/rosak (400), fail lebih 8 MB (413), threshold di luar julat (422), kontrak respons berjaya menggunakan test double, UNKNOWN, sempadan 0.70, normalisasi RGB dan tensor, output skor tidak sah dan label eksport.
 

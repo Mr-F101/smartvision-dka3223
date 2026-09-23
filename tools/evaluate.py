@@ -7,6 +7,8 @@ from pathlib import Path
 import sys
 import urllib.request
 import uuid
+import re
+from datetime import datetime, timezone
 
 
 def main():
@@ -17,10 +19,17 @@ def main():
     p.add_argument('--out',type=Path,required=True)
     p.add_argument('--threshold',type=float,default=.7)
     args=p.parse_args()
+    if not re.fullmatch(r'[A-Za-z0-9_-]+', args.experiment):p.error('Nama eksperimen: huruf, nombor, - atau _ sahaja.')
     if not 0<=args.threshold<=1:p.error('threshold mesti antara 0 hingga 1')
+    with urllib.request.urlopen(args.url+'/health',timeout=30) as response:health=json.load(response)
+    if not health.get('model_ready') or not health.get('model_id'):sys.exit('Model sebenar belum tersedia atau server perlu dikemas kini.')
+    labels=health['labels'];model_id=health['model_id']
     files=sorted(f for f in args.data.glob('*/*') if f.suffix.lower() in {'.jpg','.jpeg','.png','.webp'})
     if not files:sys.exit('Tiada imej ujian. Susun sebagai data/LABEL/imej.jpg.')
-    rows=[]; matrix={}; seen=set()
+    if set(f.parent.name for f in files)!=set(labels):sys.exit('Folder data mesti meliputi semua label model dengan ejaan yang sama.')
+    if (args.out/(args.experiment+'.csv')).exists() or (args.out/(args.experiment+'.json')).exists():
+        sys.exit('Keputusan dengan nama ini sudah wujud. Gunakan nama run baharu untuk mengekalkan bukti.')
+    rows=[]; matrix={label:{other:0 for other in labels} for label in labels}; seen=set()
     for file in files:
         data=file.read_bytes();digest=hashlib.sha256(data).hexdigest()
         if digest in seen:sys.exit('Imej pendua ditemui dalam set ujian: '+str(file))
@@ -31,8 +40,9 @@ def main():
         request=urllib.request.Request(args.url+'/predict?threshold='+str(args.threshold),data=body,
                     headers={'Content-Type':'multipart/form-data; boundary='+boundary})
         with urllib.request.urlopen(request,timeout=60) as response:pred=json.load(response)
+        if pred.get('model_id')!=model_id:sys.exit('Model berubah semasa ujian. Tiada keputusan disimpan; ulang dengan model tetap.')
         actual=file.parent.name
-        rows.append(dict(experiment=args.experiment,file=str(file),sha256=digest,actual=actual,
+        rows.append(dict(experiment=args.experiment,model_id=model_id,file=str(file),sha256=digest,actual=actual,
                          top_class=pred['top_class'],prediction=pred['prediction'],
                          confidence=pred['confidence'],threshold=args.threshold,
                          correct=actual==pred['top_class'],accepted_correct=actual==pred['prediction']))
@@ -43,7 +53,10 @@ def main():
     with path.open('w',newline='',encoding='utf-8-sig') as f:
         writer=csv.DictWriter(f,fieldnames=list(rows[0]));writer.writeheader();writer.writerows(rows)
     n=len(rows);accepted=[r for r in rows if r['prediction']!='UNKNOWN']
-    summary=dict(experiment=args.experiment,total=n,top1_accuracy=sum(r['correct'] for r in rows)/n,
+    summary=dict(experiment=args.experiment,model_id=model_id,
+                 evaluated_at=datetime.now(timezone.utc).isoformat(),
+                 dataset=[{'sha256':r['sha256'],'actual':r['actual']} for r in rows],
+                 total=n,top1_accuracy=sum(r['correct'] for r in rows)/n,
                  accepted_correct_over_all=sum(r['accepted_correct'] for r in rows)/n,
                  coverage=len(accepted)/n,
                  accuracy_among_accepted=sum(r['accepted_correct'] for r in accepted)/len(accepted) if accepted else None,

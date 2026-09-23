@@ -68,15 +68,20 @@ Kamera dipaparkan tanpa mirror untuk konsisten dengan imej upload. Input aplikas
 
 ## Ujian kod dan penilaian model
 
+Backend kini menyertakan `model_id`, iaitu SHA-256 gabungan fail model dan labels.txt. Skrip penilaian merekod cap jari model serta imej supaya keputusan dapat dijejaki. Jangan sunting JSON keputusan secara manual.
+
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
 .\.venv\Scripts\python.exe -m pytest -q
 .\.venv\Scripts\python.exe tools/check_dataset.py dataset
 .\.venv\Scripts\python.exe tools/evaluate.py --data dataset/validation --experiment E1 --out evidence/validation
 .\.venv\Scripts\python.exe tools/evaluate.py --data dataset/test --experiment FINAL --out evidence/testing
+.\.venv\Scripts\python.exe tools/compare_experiments.py evidence/validation/E1.json evidence/validation/E2.json --out evidence/validation/PERBANDINGAN.md
 ```
 
 Ujian `tests/test_api.py` menggunakan test double untuk kontrak respons. Ia **tidak membuktikan ketepatan model sebenar**. Skrip penilaian memerlukan model sebenar yang dimuat di server, menjana CSV setiap imej, accuracy top-1, coverage threshold dan confusion matrix. Jangan latih atau pilih model berdasarkan set test akhir. Tukar model dan restart server untuk menilai versi lain.
+
+Jalankan E1 dan E2 secara berasingan pada dataset/validation yang sama. Alat perbandingan menolak set imej/label atau threshold berlainan dan menolak model yang sama. evaluate.py tidak menimpa hasil sedia ada; pilih nama run baharu jika perlu. Arahan E1 sahaja di atas ialah contoh run pertama; ulang dengan `--experiment E2` selepas menukar eksport dan restart server.
 
 ## Struktur
 

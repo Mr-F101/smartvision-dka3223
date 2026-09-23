@@ -41,6 +41,7 @@ def test_threshold_validation(client):
 
 def test_success_contract_with_test_double(client):
     class Stub:
+        model_id = 'test-double-not-a-trained-model'
         labels = ['BOTOL', 'BUKU', 'TELEFON']
         def predict(self, image, threshold):
             return format_prediction(self.labels, [.8, .1, .1], threshold)
@@ -48,6 +49,7 @@ def test_success_contract_with_test_double(client):
     response = client.post('/predict', files={'file': ('a.png', image_bytes())})
     assert response.status_code == 200
     assert response.json()['prediction'] == 'BOTOL'
+    assert response.json()['model_id'] == 'test-double-not-a-trained-model'
     response = client.post('/predict?threshold=.9', files={'file': ('a.png', image_bytes())})
     assert response.json()['prediction'] == 'UNKNOWN'
 
