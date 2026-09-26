@@ -1,0 +1,22 @@
+name: Verify application and exported models
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: pip install -r requirements-model.txt -r requirements-dev.txt
+      - run: python tools/verify_install.py
+      - run: python tools/check_dataset.py dataset_public
+      - run: python -m pytest -q
+      - run: node --check static/script.js
+      - run: node --test tests/test_camera.cjs

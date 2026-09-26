@@ -90,7 +90,7 @@ $('load').onclick = async () => {
       const data = await response.json();
       if (!data.model_ready) throw new Error(data.message);
     } else {
-      if (!window.tmImage) throw new Error('Library AI tidak tersedia. Semak sambungan internet dan muat semula halaman.');
+      if (!window.tmImage) throw new Error('Library AI tidak tersedia. Semak folder static/vendor dan muat semula halaman.');
       let base = $('model-url').value.trim();
       if (!base) throw new Error('Masukkan URL model.');
       const parsed = new URL(base, location.origin);
@@ -116,11 +116,27 @@ function invalidateModel() {
 }
 $('mode').onchange = invalidateModel;
 $('model-url').onchange = invalidateModel;
+async function acquireCamera(token) {
+  let expired = false, timer;
+  const request = navigator.mediaDevices.getUserMedia({video:{width:640,height:480},audio:false})
+    .then(acquired => {
+      if (expired || token !== generation) acquired.getTracks().forEach(track => track.stop());
+      return acquired;
+    });
+  try {
+    return await Promise.race([request, new Promise((_, reject) => {
+      timer = setTimeout(() => {
+        expired = true;
+        reject(new Error('Tiada respons kamera selepas 15 saat. Semak kebenaran kamera atau gunakan muat naik imej.'));
+      }, 15000);
+    })]);
+  } finally { clearTimeout(timer); }
+}
 $('camera').onclick = async () => {
   reset(); const token=generation; busy=true; controls();
   try {
     if (!navigator.mediaDevices?.getUserMedia) throw new Error('Kamera memerlukan localhost atau HTTPS.');
-    const acquired = await navigator.mediaDevices.getUserMedia({video:{width:640,height:480},audio:false});
+    const acquired = await acquireCamera(token);
     if (token !== generation) { acquired.getTracks().forEach(t=>t.stop()); return; }
     stream=acquired; $('video').srcObject=stream; await $('video').play();
     if (token !== generation) return;

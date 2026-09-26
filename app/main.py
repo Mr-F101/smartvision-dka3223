@@ -41,11 +41,12 @@ async def lifespan(app):
     try:
         model_dir = Path(os.environ.get('MODEL_DIR', str(ROOT / 'models' / 'tflite')))
         app.state.classifier = await run_in_threadpool(TFLiteClassifier, model_dir)
-        app.state.model_message = 'Model TensorFlow Lite tersedia.'
+        app.state.model_message = 'Model TensorFlow Lite tersedia melalui Google LiteRT.'
     except FileNotFoundError as exc:
         app.state.model_message = str(exc)
     except ImportError:
-        app.state.model_message = 'Pasang requirements-model.txt untuk mengaktifkan inferens Python.'
+        logger.exception('Inference runtime could not be imported')
+        app.state.model_message = 'Runtime LiteRT gagal dimuat. Jalankan SETUP.bat atau pasang requirements-model.txt; semak log jika komponen disekat oleh sistem.'
     except Exception:
         logger.exception('Model failed to load')
         app.state.model_message = 'Model gagal dimuat. Semak eksport FLOAT, labels.txt dan log server.'

@@ -11,6 +11,8 @@ if errorlevel 1 (
  pause
  exit /b 1
 )
-echo Letak model_unquant.tflite dan labels.txt di models\tflite.
+".venv\Scripts\python.exe" tools\verify_install.py
+if errorlevel 1 exit /b 1
+echo Model E2 dan runtime Python telah disahkan.
 echo Mulakan semula server melalui MULA.bat.
 pause

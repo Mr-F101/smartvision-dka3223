@@ -44,10 +44,10 @@ class TFLiteClassifier:
         labels_path = model_dir / 'labels.txt'
         if not model_path.exists() or not labels_path.exists():
             raise FileNotFoundError('Letak model_unquant.tflite dan labels.txt di models/tflite, kemudian mula semula server.')
-        import tensorflow as tf
+        from ai_edge_litert.interpreter import Interpreter
         self.labels = read_labels(labels_path)
         self.model_id = hashlib.sha256(model_path.read_bytes() + b'\0' + labels_path.read_bytes()).hexdigest()
-        self.interpreter = tf.lite.Interpreter(model_path=str(model_path), num_threads=2)
+        self.interpreter = Interpreter(model_path=str(model_path), num_threads=2)
         self.interpreter.allocate_tensors()
         inputs = self.interpreter.get_input_details()
         outputs = self.interpreter.get_output_details()
