@@ -17,7 +17,7 @@ Dockerfile disediakan; build Docker belum disahkan pada mesin ini. Ia menggunaka
 
 ## Repository dan sejarah kerja
 
-Repository sasaran: https://github.com/Mr-F101/smartvision-dka3223 . Status penerbitan sebenar direkod dalam evidence/GITHUB_DELIVERY.md selepas push berjaya.
+Repository awam: https://github.com/Mr-F101/smartvision-dka3223 . Push, clone dan GitHub Actions sudah disahkan berjaya; lihat evidence/GITHUB_DELIVERY.md.
 
 Sejarah commit tempatan 23 September dikekalkan. Commit 26 September mewakili pembaikan runtime, bukti/model sebenar dan penyediaan penyerahan. Tarikh dan sumbangan tidak direka. Commit bantuan AI bukan bukti semua ahli menulis kod sendiri.
 

@@ -2,6 +2,8 @@
 
 Prototaip DKA3223 untuk mengenal pasti **BOTOL, BUKU dan TELEFON**. Model dilatih menggunakan Google Teachable Machine; aplikasi menyediakan inferens dalam pelayar (TensorFlow.js) dan backend Python (FastAPI, Pydantic dan Google LiteRT).
 
+[Repository awam](https://github.com/Mr-F101/smartvision-dka3223) · [GitHub Actions lulus](https://github.com/Mr-F101/smartvision-dka3223/actions/runs/36247215924) · [Bukti penerbitan](evidence/GITHUB_DELIVERY.md)
+
 ## Jalankan aplikasi
 
 Windows, Python 3.12 64-bit:
