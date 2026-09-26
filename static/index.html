@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="ms">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SmartVision — Pengelas Objek</title><link rel="stylesheet" href="/static/style.css">
-<script defer src="/static/vendor/tf.min.js"></script>
-<script defer src="/static/vendor/teachablemachine-image.min.js"></script>
-<script defer src="/static/script.js"></script></head>
+<title>SmartVision — Pengelas Objek</title><link rel="stylesheet" href="./static/style.css">
+<script defer src="./static/vendor/tf.min.js"></script>
+<script defer src="./static/vendor/teachablemachine-image.min.js"></script>
+<script defer src="./static/script.js"></script></head>
 <body>
-<header><a class="brand" href="/">SV<span>SmartVision <small>OBJECT CLASSIFIER</small></span></a><a href="/docs" target="_blank" rel="noopener">Dokumentasi API ↗</a></header>
+<header><a class="brand" href="./">SV<span>SmartVision <small>OBJECT CLASSIFIER</small></span></a><a href="/docs" target="_blank" rel="noopener">Dokumentasi API ↗</a></header>
 <main>
 <div class="intro"><p class="eyebrow">DKA3223 / COMPUTER VISION</p><h1>Kenali objek<br>di hadapan anda.</h1><p>Kelaskan imej botol, buku dan telefon menggunakan model Teachable Machine anda.</p></div>
 <section class="settings" aria-labelledby="setup-title"><div><h2 id="setup-title">01 / Sambungkan model</h2><p>Gunakan model terlatih untuk memulakan ramalan.</p></div>
 <div class="settings-fields"><label for="mode">Kaedah inferens</label><select id="mode"><option value="browser">Pelayar · TensorFlow.js</option><option value="api">Python · FastAPI</option></select>
-<div id="url-field"><label for="model-url">Pautan atau folder model</label><input id="model-url" type="text" placeholder="https://teachablemachine.withgoogle.com/models/ID/" value="/models/tfjs/"><small>Fail tempatan: letak eksport TensorFlow.js dalam models/tfjs.</small></div>
+<div id="url-field"><label for="model-url">Pautan atau folder model</label><input id="model-url" type="text" placeholder="https://teachablemachine.withgoogle.com/models/ID/" value="./models/tfjs/"><small>Fail tempatan: letak eksport TensorFlow.js dalam models/tfjs.</small></div>
 <button id="load">Muatkan model</button><p id="model-status" role="status">Model belum dimuatkan.</p></div></section>
 <div class="workspace"><section class="input-panel" aria-labelledby="input-title"><div class="section-heading"><h2 id="input-title">02 / Input imej</h2><span id="source">Tiada input</span></div>
 <div id="viewport"><div id="empty"><span class="viewfinder">[ + ]</span><h3>Satu objek, satu ramalan.</h3><p>Letakkan objek di tengah bingkai dengan pencahayaan yang jelas.</p></div><canvas id="frame" width="400" height="400" hidden aria-label="Pratonton imej yang digunakan untuk ramalan"></canvas></div>

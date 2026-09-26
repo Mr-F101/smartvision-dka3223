@@ -13,6 +13,7 @@ models/**/*.bin
 models/**/*.tflite
 models/**/*.h5
 *.zip
+_site/
 
 # Preserve old local material without adding it to the submission.
 models/original_user/

@@ -93,7 +93,7 @@ $('load').onclick = async () => {
       if (!window.tmImage) throw new Error('Library AI tidak tersedia. Semak folder static/vendor dan muat semula halaman.');
       let base = $('model-url').value.trim();
       if (!base) throw new Error('Masukkan URL model.');
-      const parsed = new URL(base, location.origin);
+      const parsed = new URL(base, document.baseURI);
       if (parsed.origin !== location.origin && (parsed.protocol !== 'https:' || parsed.hostname !== 'teachablemachine.withgoogle.com')) throw new Error('Gunakan URL HTTPS Teachable Machine atau folder model tempatan.');
       base = parsed.href.replace(/\/?$/, '/');
       const loaded = await tmImage.load(base+'model.json',base+'metadata.json');
@@ -193,3 +193,5 @@ $('export').onclick=()=>{
   const a=document.createElement('a');a.href=url;a.download='rekod-ujian.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 };
 window.addEventListener('pagehide',stopCamera);
+// The public static deployment ships E2 and starts it automatically.
+if (document.documentElement?.dataset.deployment === 'pages') $('load').click();
