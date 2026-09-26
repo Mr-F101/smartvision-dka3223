@@ -77,7 +77,6 @@ Untuk penilaian tambahan tanpa menimpa bukti asal:
 .\.venv\Scripts\python.exe tools/evaluate.py --data dataset_public/validation --experiment E2_RECHECK --out evidence/recheck
 ```
 
-Jangan gunakan hasil test untuk menala semula model atau menulis hasil rekaan.
 
 ## Panduan penyerahan
 
@@ -87,7 +86,6 @@ Jangan gunakan hasil test untuk menala semula model atau menulis hasil rekaan.
 - [Rekod penggunaan AI](evidence/AI_LOG.md)
 - [Sumbangan sebenar ahli](docs/SUMBANGAN_AHLI.md)
 
-Laporan dan slaid dikecualikan daripada kerja serta pakej semasa. Rekod bertarikh lebih awal ialah sejarah; rujuk bukti 26 September untuk status terkini. Latihan demo dan pengesahan sumbangan mesti dibuat oleh ahli sebenar.
 
 ## Sumber teknikal dan lesen
 
