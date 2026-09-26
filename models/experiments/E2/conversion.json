@@ -1,0 +1,64 @@
+{
+  "method": "Local format conversion of Teachable Machine TFJS export; no retraining",
+  "tensorflow": "2.20.0",
+  "tf_keras": "2.20.1",
+  "weights_loaded": 263,
+  "tflite_sha256": "642bbfea613d39935ae60e894124c7d2a958e8ee7d0bddc01da5f9f11de82a55",
+  "parity_checks": [
+    {
+      "image": "dataset_public\\train_e1\\BOTOL\\004a9745418ba5a6.jpg",
+      "max_abs_difference": 1.6484591469634324e-12,
+      "keras": [
+        [
+          0.9999991655349731,
+          3.40557271272246e-08,
+          8.883943110049586e-07
+        ]
+      ],
+      "tflite": [
+        [
+          0.9999991655349731,
+          3.40557271272246e-08,
+          8.883959594641055e-07
+        ]
+      ]
+    },
+    {
+      "image": "dataset_public\\train_e1\\BUKU\\00f1fda298b88865.jpg",
+      "max_abs_difference": 1.1920928955078125e-07,
+      "keras": [
+        [
+          0.00018773373449221253,
+          0.9942898750305176,
+          0.005522362422198057
+        ]
+      ],
+      "tflite": [
+        [
+          0.00018773568444885314,
+          0.994289755821228,
+          0.005522451363503933
+        ]
+      ]
+    },
+    {
+      "image": "dataset_public\\train_e1\\TELEFON\\0192deb7b7fade4c.jpg",
+      "max_abs_difference": 6.621121428906918e-10,
+      "keras": [
+        [
+          3.609713530750014e-05,
+          9.852568473434076e-05,
+          0.9998652935028076
+        ]
+      ],
+      "tflite": [
+        [
+          3.6097066185902804e-05,
+          9.852502262219787e-05,
+          0.9998652935028076
+        ]
+      ]
+    }
+  ],
+  "limitation": "Keras/TFLite numeric parity on 3 training images only, not external accuracy or independent TFJS parity"
+}

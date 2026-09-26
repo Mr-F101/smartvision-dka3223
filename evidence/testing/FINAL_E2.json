@@ -1,0 +1,150 @@
+{
+  "experiment": "FINAL_E2",
+  "model_id": "4860b5a9063c1153b4824ab0271e9f66094e2d5ad9c7ce8d3da15a9ee5e225c0",
+  "evaluated_at": "2026-09-24T06:37:39.327766+00:00",
+  "dataset": [
+    {
+      "sha256": "0bae3771e59900b8c5781aaf5df226525d7473c6f4b4c5f2a39d619035ebb096",
+      "actual": "BOTOL"
+    },
+    {
+      "sha256": "11100aed2216afc2368968250c7fe387fba974ba939cea206702f1bdc887e520",
+      "actual": "BOTOL"
+    },
+    {
+      "sha256": "939d5ed0f6d4d1f84053df2e68e3d17ad391e2321aac3b691272a672efad2c97",
+      "actual": "BOTOL"
+    },
+    {
+      "sha256": "ab47e48dc7e0e6ff19c03c75ba53e207d2b09814de7926d4396e9126bceed086",
+      "actual": "BOTOL"
+    },
+    {
+      "sha256": "997f3ce2604fc97043f43d68b0c40e790571b2df75fcd5ce5306fb38d850522b",
+      "actual": "BOTOL"
+    },
+    {
+      "sha256": "f57d8450db8f98d9f55817b6870481aa4b6ae8e33d62a49994df225c70478b19",
+      "actual": "BOTOL"
+    },
+    {
+      "sha256": "ab03549570ffe149232ce70a1d5e2526910e168864ca6d5021e0b2906c8e0781",
+      "actual": "BOTOL"
+    },
+    {
+      "sha256": "fd8b22e5ec4c200f4a805686f396e636d61167f8e4e4bbcaf0815a187864027e",
+      "actual": "BOTOL"
+    },
+    {
+      "sha256": "c7828eec0a9c4e7f2d7014724fe41ecdab21f489bf2c6cfaafe725d1b09a358f",
+      "actual": "BOTOL"
+    },
+    {
+      "sha256": "08e2c0b08908f60883d78a7e78ae6d970d3cc9ab373510df8c5ce102299b8673",
+      "actual": "BOTOL"
+    },
+    {
+      "sha256": "27ea1c5cf22984f8f081e26d3b84f80527c9a943181f3b30b3b95cbe411a2e67",
+      "actual": "BUKU"
+    },
+    {
+      "sha256": "ec016c627160c1051e74bc9ca19e02b573595b4c516393945951d8eb4f63be66",
+      "actual": "BUKU"
+    },
+    {
+      "sha256": "ef2ec648b5264e93cadc4f734f90167c9fed3c7dcbbe1f7df34906ee43133b49",
+      "actual": "BUKU"
+    },
+    {
+      "sha256": "a8261796c7d19528dd64c0274a174232094c04278b84ea728c9f53fd7fbfba2a",
+      "actual": "BUKU"
+    },
+    {
+      "sha256": "c6d8922cdd405f262d9d4560e369df17ebd6c061c9b59ba1f3ab78f7585ba496",
+      "actual": "BUKU"
+    },
+    {
+      "sha256": "276e4f4d111dc63262654221bc724637d9b947ad209891f382b0ea9e3bbc5e4a",
+      "actual": "BUKU"
+    },
+    {
+      "sha256": "c6db3b8eaacb0a3cdaea335649037fe88529d533902bcf4e964391b3fffa2b88",
+      "actual": "BUKU"
+    },
+    {
+      "sha256": "2207f4075a17b68bec8c339e7f835f72f5311d0b1bbb6baf860b58c8479b0bdd",
+      "actual": "BUKU"
+    },
+    {
+      "sha256": "3d14b5106654a3d9d15c84600b03b11f3495a94b6f4011613c54fb9f7bff55af",
+      "actual": "BUKU"
+    },
+    {
+      "sha256": "959c0b03ece9c4c41b2a850eac3aac27d727baedbc51153cdb78a100f221c85a",
+      "actual": "BUKU"
+    },
+    {
+      "sha256": "61154b6d9cfd476b947b0e73220797ddb733b15042fa797d9635c98e3ddaed3d",
+      "actual": "TELEFON"
+    },
+    {
+      "sha256": "d55dcd8b7b58677936a8f98cc96795beed0af2564c647b520338d96de1f3c65a",
+      "actual": "TELEFON"
+    },
+    {
+      "sha256": "08919d776f2aeceed998c2c9304296df218c5d6d578a71b9c69a88937ffc5ea1",
+      "actual": "TELEFON"
+    },
+    {
+      "sha256": "92ef858b0bf1acce01fe1c3c177fe64141c1393008398a3b27862749473512fe",
+      "actual": "TELEFON"
+    },
+    {
+      "sha256": "74492dab7b10d69be0841f98a2f7fd3a38656b51beffb022d1ecd2a9de22d287",
+      "actual": "TELEFON"
+    },
+    {
+      "sha256": "837d8820854777f2c11095c83e86f630bb72e4c5e6b7e835e42b7628b7802b76",
+      "actual": "TELEFON"
+    },
+    {
+      "sha256": "9799ae2d015526d6a6b07404571484f8741247a1efe727e8c16439e0867dbf0f",
+      "actual": "TELEFON"
+    },
+    {
+      "sha256": "d58a8a08211adbc96daf040af9c8778ee23ce8321ea11aee9ce33742a7c0afa5",
+      "actual": "TELEFON"
+    },
+    {
+      "sha256": "2805129e6a0ea04ec4281e7a09407cba90c4f568afa2e07e73fa9f0dd7956d07",
+      "actual": "TELEFON"
+    },
+    {
+      "sha256": "723354030bf931c29b7c028b914f7b203cc39c2fd175645478b91684edc7787e",
+      "actual": "TELEFON"
+    }
+  ],
+  "total": 30,
+  "top1_accuracy": 0.9333333333333333,
+  "accepted_correct_over_all": 0.9333333333333333,
+  "coverage": 0.9666666666666667,
+  "accuracy_among_accepted": 0.9655172413793104,
+  "threshold": 0.7,
+  "confusion_matrix_top1": {
+    "BOTOL": {
+      "BOTOL": 10,
+      "BUKU": 0,
+      "TELEFON": 0
+    },
+    "BUKU": {
+      "BOTOL": 0,
+      "BUKU": 9,
+      "TELEFON": 1
+    },
+    "TELEFON": {
+      "BOTOL": 0,
+      "BUKU": 1,
+      "TELEFON": 9
+    }
+  }
+}

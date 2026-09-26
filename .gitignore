@@ -13,3 +13,19 @@ models/**/*.bin
 models/**/*.tflite
 models/**/*.h5
 *.zip
+
+# Preserve old local material without adding it to the submission.
+models/original_user/
+models/tflite/converted_tflite*/
+models/tfjs/weights.bin
+docs/*.docx
+docs/*.pptx
+evidence/screenshots/E1_training_complete.png
+
+# Reproducible deployment must include the evaluated model binaries.
+!models/tfjs/model.weights.bin
+!models/tflite/model_unquant.tflite
+!models/experiments/E1/tfjs/model.weights.bin
+!models/experiments/E1/tflite/model_unquant.tflite
+!models/experiments/E2/tfjs/model.weights.bin
+!models/experiments/E2/tflite/model_unquant.tflite

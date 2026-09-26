@@ -1,0 +1,16 @@
+* text=auto
+*.py text eol=lf
+*.js text eol=lf
+*.cjs text eol=lf
+*.yml text eol=lf
+*.md text eol=lf
+*.bat text eol=crlf
+# Model identity includes raw label bytes; preserve exports on every OS.
+models/** -text
+static/vendor/** -text
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.webp binary
+*.tflite binary
+*.bin binary

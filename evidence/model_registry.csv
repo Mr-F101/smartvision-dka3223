@@ -1,3 +1,3 @@
 experiment,training_date,tfjs_url,export_archive_url,model_sha256,labels,notes
-E1,,,,,BOTOL BUKU TELEFON,Belum dilatih
-E2,,,,,BOTOL BUKU TELEFON,Belum dilatih
+E1,2026-09-24,https://teachablemachine.withgoogle.com/models/v5ZQtNpgc/,models/experiments/E1,05722eed1aa1a9bff93795986135302025bfcfb5c5af459fad8b038e8f62406f,BOTOL BUKU TELEFON,SHA256 fail TFLite; eksport TFJS TM sebenar ditukar tempatan tanpa latihan semula
+E2,2026-09-24,https://teachablemachine.withgoogle.com/models/A8ibBF5HJ/,models/experiments/E2,642bbfea613d39935ae60e894124c7d2a958e8ee7d0bddc01da5f9f11de82a55,BOTOL BUKU TELEFON,SHA256 fail TFLite; dipilih berdasarkan validation sebelum test
