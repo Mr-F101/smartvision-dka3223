@@ -1,112 +1,97 @@
 # SmartVision Object Classifier
 
-Prototaip DKA3223 untuk mengklasifikasikan **BOTOL, BUKU dan TELEFON** menggunakan Google Teachable Machine. Skop A (Object Image Classification). Kelas boleh diubah mengikut model terlatih.
+Prototaip DKA3223 untuk mengenal pasti **BOTOL, BUKU dan TELEFON**. Model dilatih menggunakan Google Teachable Machine; aplikasi menyediakan inferens dalam pelayar (TensorFlow.js) dan backend Python (FastAPI, Pydantic dan Google LiteRT).
 
-## Status penting
+## Jalankan aplikasi
 
-Kod aplikasi dan panduan disediakan. **Dataset sebenar, model E1/E2, keputusan ketepatan, identiti pelajar dan pautan GitHub belum dibekalkan.** Tiada model atau keputusan eksperimen direka. Aplikasi akan memaparkan mesej model belum tersedia sehingga anda memasukkan eksport sebenar. Laporan dan slaid perlu dilengkapkan dengan bukti tersebut sebelum dihantar.
+Windows, Python 3.12 64-bit:
 
-## Mula di sini
+1. Muat turun/clone repository ini dan buka folder projek.
+2. Jalankan `SETUP.bat` sekali. Ia memasang runtime dan mengesahkan model sebenar.
+3. Jalankan `MULA.bat`, kemudian buka **http://127.0.0.1:8000**.
+4. Pilih mod Pelayar atau Python, tekan **Muatkan model**, kemudian upload imej. Model aktif ialah E2.
 
-1. Baca `docs/PANDUAN_LANGKAH_DEMI_LANGKAH.md` untuk persediaan dataset dan semua 12 fasa gambar.
-2. Pasang Python 3.12 (64 bit). Jalankan arahan berikut dalam folder `SmartClassifier`:
+Arahan terminal (Linux/macOS: gunakan `python3` dan `.venv/bin/python`):
 
 ```powershell
 py -3.12 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000
-```
-
-3. Buka http://127.0.0.1:8000. Jangan buka `index.html` terus melalui `file://`.
-4. Latih model di https://teachablemachine.withgoogle.com/train/image.
-5. Pilih **TensorFlow.js**, muat naik model dan salin URL. Dalam aplikasi pilih mod Pelayar, tampal URL, tekan **Muatkan model**.
-6. Alternatif: muat turun eksport TensorFlow.js, ekstrak semua fail ke `models/tfjs/`, gunakan `/models/tfjs/`.
-7. Mulakan kamera atau muat naik imej. Model dikira dalam pelayar bagi mod ini. Internet diperlukan untuk library CDN, dan model jika dihoskan dalam Teachable Machine.
-
-## Backend Python sebenar
-
-1. Eksport versi model yang sama: **TensorFlow Lite → Floating point / unquantized**.
-2. Letak `model_unquant.tflite` dan `labels.txt` dalam `models/tflite/`. Kekalkan susunan label eksport.
-3. Pasang kebergantungan model dan mulakan semula server:
-
-```powershell
 .\.venv\Scripts\python.exe -m pip install -r requirements-model.txt
+.\.venv\Scripts\python.exe tools/verify_install.py
 .\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
 
-4. Pilih mod **Python · FastAPI**, kemudian **Muatkan model**. `/health` mesti menunjukkan `model_ready: true`.
-5. Buka http://127.0.0.1:8000/docs untuk menguji `POST /predict`. Input ialah multipart fail imej. Output menggunakan skema Pydantic.
+Fail model dan library pelayar disertakan. Selepas pemasangan Python, demo menggunakan model tempatan tanpa memerlukan CDN atau pautan model awam. Jangan buka index.html melalui file://. Untuk kamera, gunakan localhost atau HTTPS dan benarkan kebenaran pelayar; upload imej ialah laluan demo yang telah disahkan.
+
+## Dataset dan keputusan sebenar
+
+Dataset mempunyai **210 imej unik**: 50 latihan, 10 validation dan 10 test setiap kelas. train_e1 dan train_e2 sengaja berkongsi 150 imej latihan yang sama. Sumber Open Images dan atribusi setiap gambar tersedia dalam [dataset_public](dataset_public/README.md) dan [attribution.csv](evidence/public_dataset/attribution.csv).
+
+| Eksperimen | Epoch | Batch | Learning rate | Validation |
+|---|---:|---:|---:|---:|
+| E1 | 50 | 16 | 0.001 | 26/30 (86.67%) |
+| E2 | 100 | 16 | 0.001 | 27/30 (90.00%) |
+
+E2 dipilih berdasarkan validation sebelum test akhir: **28/30 (93.33% top-1)**. Ini bukan jaminan prestasi dunia sebenar; hanya 30 imej test. Seed dan split dalaman TM tidak dikawal, jadi epoch bukan punca peningkatan yang terbukti secara tersendiri. [Pemilihan model](evidence/MODEL_SELECTION.md), [perbandingan](evidence/validation/PERBANDINGAN.md), [CSV test](evidence/testing/FINAL_E2.csv).
+
+Eksport TFJS asal dan TFLite untuk kedua-dua versi berada dalam `models/experiments`. TFLite ditukar secara tempatan daripada TFJS tanpa latihan semula. `models/tfjs` dan `models/tflite` ialah salinan E2 untuk aplikasi. Cap jari model dan imej sepadan dengan bukti penilaian.
+
+## Ciri dan had
+
+- Upload JPEG/PNG/WebP, maksimum 8 MB dan 16 megapiksel; kamera jika tersedia.
+- Kelas ramalan, confidence, skor setiap kelas, status dan reset.
+- Ambang 70% menghasilkan UNKNOWN apabila confidence rendah. Ini **bukan pengesan semua objek asing**: imej Bumi di luar kelas mendapat BOTOL 96.70% melalui API. Lihat [bukti luar skop](evidence/out_of_scope/api_result.json).
+- Simpan label sebenar dan eksport CSV. Rekod hanya kekal dalam sesi pelayar; muat turun sebelum menutup halaman.
+- Kamera yang tidak memberi respons berhenti menunggu selepas 15 saat; upload kekal boleh digunakan. Ujian logik kamera menggunakan simulasi dan tidak membuktikan webcam fizikal setiap mesin.
+
+## Aliran inferens dan API
+
+Pelayar: imej/webcam → crop tengah canvas 400×400 → tmImage.predict → skor → threshold → UI.
+
+Python: imej → POST /predict → semakan fail → EXIF/RGB → crop tengah/resize → normalisasi [-1,1] → model TFLite melalui LiteRT → respons Pydantic → UI.
+
+GET `/health` mesti menunjukkan `model_ready: true`. Dokumentasi interaktif: `/docs`.
 
 ```powershell
-curl.exe -X POST "http://127.0.0.1:8000/predict?threshold=0.7" -F "file=@dataset/test/BOTOL/botol_001.jpg"
+curl.exe -X POST "http://127.0.0.1:8000/predict?threshold=0.7" -F "file=@dataset_public/test/BOTOL/049d99faa622b032.jpg"
 ```
 
-Contoh bentuk respons sahaja, **bukan keputusan ujian sebenar**:
+Respons mengandungi `prediction`, `top_class`, `confidence`, `status`, `threshold`, `scores` dan SHA-256 `model_id`. UI menukar canvas kepada JPEG; ujian batch membaca imej asal. Perbezaan resampling boleh mengubah skor sedikit. Bandingkan eksperimen pada aliran preprocessing yang sama.
 
-```json
-{"prediction":"BOTOL","top_class":"BOTOL","confidence":0.94,"status":"recognized","threshold":0.7,"scores":[{"label":"BOTOL","confidence":0.94},{"label":"BUKU","confidence":0.04},{"label":"TELEFON","confidence":0.02}]}
-```
-
-FastAPI melakukan inferens pada server dalam mod Python. Ia bukan sekadar menerima prediction daripada pelayar. Dalam mod Pelayar, FastAPI menyediakan fail aplikasi sahaja. Export TF.js tidak boleh dibaca terus oleh interpreter TFLite.
-
-## Ciri aplikasi
-
-- Kamera dan upload JPEG, PNG, WebP, had 8 MB / 16 megapiksel.
-- Kelas ramalan, confidence peratus dan skor setiap kelas.
-- Ambang default 70%, UNKNOWN jika di bawah ambang. Ini bukan pengesan objek asing yang terjamin.
-- Reset, hentikan kamera dan mesej ralat untuk model, fail atau kebenaran kamera.
-- Label sebenar dan eksport CSV rekod ujian. Hentikan kamera sebelum merekod keputusan.
-- Antaramuka responsif dalam Bahasa Melayu.
-
-## Aliran data
-
-Pelayar: imej/webcam → crop tengah → tmImage.predict → skor kelas → threshold → UI.
-
-Python: imej/webcam → POST /predict → pengesahan fail → EXIF/RGB → crop tengah dan resize mengikut model → normalisasi [-1,1] → TensorFlow Lite → Pydantic JSON → UI.
-
-Kamera dipaparkan tanpa mirror untuk konsisten dengan imej upload. Input aplikasi dipotong kepada 400 × 400 sebelum inferens. Ujian batch API membaca imej asal lalu resize terus ke saiz model. Perbezaan resampling boleh menghasilkan sedikit perbezaan skor; gunakan mod dan aliran yang sama untuk perbandingan eksperimen serta rekodkan aliran ujian.
-
-## Ujian kod dan penilaian model
-
-Backend kini menyertakan `model_id`, iaitu SHA-256 gabungan fail model dan labels.txt. Skrip penilaian merekod cap jari model serta imej supaya keputusan dapat dijejaki. Jangan sunting JSON keputusan secara manual.
+## Pengesahan
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
 .\.venv\Scripts\python.exe -m pytest -q
-.\.venv\Scripts\python.exe tools/check_dataset.py dataset
-.\.venv\Scripts\python.exe tools/evaluate.py --data dataset/validation --experiment E1 --out evidence/validation
-.\.venv\Scripts\python.exe tools/evaluate.py --data dataset/test --experiment FINAL --out evidence/testing
-.\.venv\Scripts\python.exe tools/compare_experiments.py evidence/validation/E1.json evidence/validation/E2.json --out evidence/validation/PERBANDINGAN.md
+.\.venv\Scripts\python.exe tools/check_dataset.py dataset_public
+node --check static/script.js
+node tests/test_camera.cjs
 ```
 
-Ujian `tests/test_api.py` menggunakan test double untuk kontrak respons. Ia **tidak membuktikan ketepatan model sebenar**. Skrip penilaian memerlukan model sebenar yang dimuat di server, menjana CSV setiap imej, accuracy top-1, coverage threshold dan confusion matrix. Jangan latih atau pilih model berdasarkan set test akhir. Tukar model dan restart server untuk menilai versi lain.
+26 September 2026: **21 ujian Python lulus**, termasuk 90 inferens sebenar yang sepadan dengan keputusan E1/E2 terdahulu; **4 ujian logik kamera lulus**; lima semakan HTTP sebenar lulus. TFJS, Python, UNKNOWN dan fail CSV muat turun disahkan melalui UI. Bukti: [VERIFIKASI_26SEPT.md](evidence/VERIFIKASI_26SEPT.md). Workflow GitHub Actions menjalankan semakan yang sama; status run sebenar boleh dilihat pada tab Actions.
 
-Jalankan E1 dan E2 secara berasingan pada dataset/validation yang sama. Alat perbandingan menolak set imej/label atau threshold berlainan dan menolak model yang sama. evaluate.py tidak menimpa hasil sedia ada; pilih nama run baharu jika perlu. Arahan E1 sahaja di atas ialah contoh run pertama; ulang dengan `--experiment E2` selepas menukar eksport dan restart server.
+Untuk penilaian tambahan tanpa menimpa bukti asal:
 
-## Struktur
-
-```text
-app/                 FastAPI, skema Pydantic dan inferens TFLite
-static/              index.html, script.js, style.css
-models/tfjs/         eksport model untuk pelayar
-models/tflite/       eksport FLOAT untuk Python
-dataset/             train_e1, train_e2, validation, test
-tools/               semakan dataset dan penilaian batch
-tests/               ujian kod
-docs/                panduan, laporan dan bahan pembentangan
-evidence/            borang eksperimen, sumber dataset, bukti AI dan testing
+```powershell
+.\.venv\Scripts\python.exe tools/evaluate.py --data dataset_public/validation --experiment E2_RECHECK --out evidence/recheck
 ```
 
-## Deployment
+Jangan gunakan hasil test untuk menala semula model atau menulis hasil rekaan.
 
-Deployment tempatan di localhost sudah membolehkan demo aplikasi/API. Jika pensyarah memerlukan URL awam, gunakan hos Python yang menyokong TensorFlow, bind `0.0.0.0` dan port persekitaran hos, simpan model dalam storan deployment, gunakan HTTPS untuk kamera. Rujuk `docs/DEPLOYMENT_DAN_GITHUB.md`. Tiada deployment awam atau repository GitHub diterbitkan secara automatik.
+## Panduan penyerahan
 
-## Rujukan rasmi
+- [Senarai padanan kehendak soalan](docs/SENARAI_SEMAK_PENYERAHAN.md)
+- [Skrip demo dan jawapan 12 soalan lisan](docs/SKRIP_DEMO_DAN_SOAL_JAWAB.md)
+- [Deployment dan GitHub](docs/DEPLOYMENT_DAN_GITHUB.md)
+- [Rekod penggunaan AI](evidence/AI_LOG.md)
+- [Sumbangan sebenar ahli](docs/SUMBANGAN_AHLI.md)
 
-- Teachable Machine image library: https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
-- Model converter dan normalisasi: https://github.com/googlecreativelab/teachablemachine-community/blob/master/snippets/converter/image/api.py
-- FastAPI file input: https://fastapi.tiangolo.com/tutorial/request-files/
-- Pydantic models: https://docs.pydantic.dev/latest/concepts/models/
-- TensorFlow Lite interpreter: https://www.tensorflow.org/api_docs/python/tf/lite/Interpreter
+Laporan dan slaid dikecualikan daripada kerja serta pakej semasa. Rekod bertarikh lebih awal ialah sejarah; rujuk bukti 26 September untuk status terkini. Latihan demo dan pengesahan sumbangan mesti dibuat oleh ahli sebenar.
 
-Arahan projek dalam `DKA3223 FA .docx` ialah sumber keperluan. Gambar tutorial ialah rujukan urutan pembangunan. Perancangan dan sasaran sampel di dalam pakej ini bukan keputusan yang telah dicapai.
+## Sumber teknikal dan lesen
+
+- [Google LiteRT migration](https://developers.google.com/edge/litert/migration)
+- [Teachable Machine library](https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image)
+- [FastAPI file uploads](https://fastapi.tiangolo.com/tutorial/request-files/)
+- [Pydantic models](https://docs.pydantic.dev/latest/concepts/models/)
+
+Library pihak ketiga dan lesen asal disimpan dalam `static/vendor`, bersama URL sumber dan SHA-256. Dataset mengikuti lesen sumber setiap imej; jangan anggap lesen library terpakai pada dataset. Screenshot latihan E1 yang mengandungi wajah webcam dikekalkan secara tempatan sahaja; bukti latihan E1 tanpa preview wajah disertakan.

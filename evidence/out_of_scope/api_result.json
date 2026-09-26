@@ -1,0 +1,28 @@
+{
+  "checked_at": "2026-09-26T13:53:40.996954+00:00",
+  "actual": "OUT_OF_SCOPE_EARTH",
+  "method": "HTTP original image, not UI canvas",
+  "response": {
+    "model_id": "4860b5a9063c1153b4824ab0271e9f66094e2d5ad9c7ce8d3da15a9ee5e225c0",
+    "prediction": "BOTOL",
+    "top_class": "BOTOL",
+    "confidence": 0.9669849276542664,
+    "status": "recognized",
+    "threshold": 0.7,
+    "scores": [
+      {
+        "label": "BOTOL",
+        "confidence": 0.9669849276542664
+      },
+      {
+        "label": "BUKU",
+        "confidence": 0.010635352693498135
+      },
+      {
+        "label": "TELEFON",
+        "confidence": 0.02237965352833271
+      }
+    ]
+  },
+  "interpretation": "A three-class classifier can confidently label an unrelated image; UNKNOWN is thresholding, not guaranteed novelty detection."
+}

@@ -1,0 +1,94 @@
+{
+  "checked_at": "2026-09-24T06:39:10.705876+00:00",
+  "method": "Live HTTP integration checks, not manual browser tests",
+  "health": {
+    "status": "ok",
+    "model_ready": true,
+    "message": "Model TensorFlow Lite tersedia.",
+    "labels": [
+      "BOTOL",
+      "BUKU",
+      "TELEFON"
+    ],
+    "model_id": "4860b5a9063c1153b4824ab0271e9f66094e2d5ad9c7ce8d3da15a9ee5e225c0"
+  },
+  "checks": [
+    {
+      "id": "API01",
+      "expected_status": 200,
+      "actual_status": 200,
+      "passed": true,
+      "response": {
+        "model_id": "4860b5a9063c1153b4824ab0271e9f66094e2d5ad9c7ce8d3da15a9ee5e225c0",
+        "prediction": "BOTOL",
+        "top_class": "BOTOL",
+        "confidence": 0.9999969005584717,
+        "status": "recognized",
+        "threshold": 0.7,
+        "scores": [
+          {
+            "label": "BOTOL",
+            "confidence": 0.9999969005584717
+          },
+          {
+            "label": "BUKU",
+            "confidence": 2.7975002012681216e-06
+          },
+          {
+            "label": "TELEFON",
+            "confidence": 3.63839660622034e-07
+          }
+        ]
+      }
+    },
+    {
+      "id": "API02",
+      "expected_status": 400,
+      "actual_status": 400,
+      "passed": true,
+      "response": {
+        "detail": "Fail imej kosong."
+      }
+    },
+    {
+      "id": "API03",
+      "expected_status": 413,
+      "actual_status": 413,
+      "passed": true,
+      "response": {
+        "detail": "Had saiz fail ialah 8 MB."
+      }
+    },
+    {
+      "id": "API04",
+      "expected_status": 422,
+      "actual_status": 422,
+      "passed": true,
+      "response": {
+        "detail": [
+          {
+            "type": "less_than_equal",
+            "loc": [
+              "query",
+              "threshold"
+            ],
+            "msg": "Input should be less than or equal to 1",
+            "input": "1.1",
+            "ctx": {
+              "le": 1.0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "API05",
+      "expected_status": 400,
+      "actual_status": 400,
+      "passed": true,
+      "response": {
+        "detail": "Fail bukan imej yang sah atau rosak."
+      }
+    }
+  ]
+}

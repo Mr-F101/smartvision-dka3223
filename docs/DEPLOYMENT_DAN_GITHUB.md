@@ -2,42 +2,31 @@
 
 ## Deployment tempatan
 
-Jalankan `python -m uvicorn app.main:app --host 127.0.0.1 --port 8000` dalam virtual environment. Buka localhost, semak UI, `/health` dan `/docs`. Gunakan fail model sebenar dan rekod bukti. Menjalankan server tanpa model hanya membuktikan aplikasi tersedia, bukan inferens berjaya.
+Jalankan SETUP.bat diikuti MULA.bat. Buka http://127.0.0.1:8000 dan sahkan /health menunjukkan model_ready: true. Model E2, label, TFJS dan library JavaScript tempatan disertakan. Python menggunakan Google LiteRT 2.2.0, bukan pakej TensorFlow penuh. Kejayaan HTTP inferens sebenar direkod dalam evidence/live_api_checks_26sept.json.
 
-## Deployment melalui Docker jika diperlukan
+Dokumen tugasan mensyaratkan deployment mengikut pensyarah, bukan URL awam secara umum. Localhost menyediakan aplikasi/API untuk demo. URL model Teachable Machine dan URL repository GitHub bukan URL aplikasi Python.
 
-Dockerfile disediakan untuk Python 3.12 dan TensorFlow. Pastikan model_unquant.tflite dan labels.txt wujud sebelum build:
+## Docker pilihan
 
-```powershell
+```sh
 docker build -t smartvision-classifier .
 docker run --rm -p 8000:8000 smartvision-classifier
 ```
 
-Imej Docker besar kerana TensorFlow. Build dan hosting belum dijalankan dalam pakej ini. Pilih hos dengan RAM dan ruang disk yang memadai untuk model. Pada hos, tetapkan port melalui PORT dan gunakan HTTPS jika pengguna mengakses webcam dari luar localhost. `/health` menunjukkan server hidup tetapi semak `model_ready` juga. Jangan jadikan health status `ok` sahaja sebagai bukti model siap. Jangan gunakan `--reload` untuk deployment awam. Endpoint tiada autentikasi atau rate limit; untuk penggunaan umum sebenar, tambah kedua-duanya serta had upload pada reverse proxy.
+Dockerfile disediakan; build Docker belum disahkan pada mesin ini. Ia menggunakan Python 3.12 dan LiteRT. Untuk hosting, tetapkan PORT dan HTTPS jika menggunakan kamera. Deployment awam perlu mengikut hos/arahan pensyarah. Jangan gunakan --reload untuk production; aplikasi pendidikan ini tidak menyediakan autentikasi atau rate limiting untuk pengguna umum.
 
-## Repository GitHub
+## Repository dan sejarah kerja
 
-Folder projek asal mempunyai repository Git tempatan dengan commit bantuan Codex. Ini bukan bukti sumbangan pelajar atau kerja berkala sepanjang minggu. Arkib ZIP mengandungi fail projek tanpa metadata .git; jika menggunakan ZIP, mulakan repository melalui arahan di bawah. Jika menggunakan folder asal, sambung sejarah yang sedia ada dan rekod kerja anda sendiri.
+Repository sasaran: https://github.com/Mr-F101/smartvision-dka3223 . Status penerbitan sebenar direkod dalam evidence/GITHUB_DELIVERY.md selepas push berjaya.
 
-Bina repository kosong melalui akaun GitHub anda, contohnya `dka3223-smartvision`. Arahan berikut ialah tindakan masa hadapan, bukan bukti sudah diterbitkan:
+Sejarah commit tempatan 23 September dikekalkan. Commit 26 September mewakili pembaikan runtime, bukti/model sebenar dan penyediaan penyerahan. Tarikh dan sumbangan tidak direka. Commit bantuan AI bukan bukti semua ahli menulis kod sendiri.
 
-```powershell
-git init
-git add app static requirements*.txt tests tools .gitignore README.md
-git commit -m "Add image classifier application and API"
-git add docs evidence Dockerfile .dockerignore dataset
-git commit -m "Add experiment plan and project documentation"
-git branch -M main
-git remote add origin https://github.com/NAMA_ANDA/dka3223-smartvision.git
-git push -u origin main
+Model E1/E2 dan dataset aktif dimasukkan terus dalam Git; pengguna clone tidak perlu mengambil model daripada komputer Faris. Fail runtime .venv, rahsia, dataset lama, eksport asal tidak digunakan dan screenshot webcam E1 tidak ditambah. Laporan/slaid tempatan tidak dikemas kini.
+
+```sh
+git clone https://github.com/Mr-F101/smartvision-dka3223.git
+cd smartvision-dka3223
+git log --oneline --decorate
 ```
 
-Jika repository sudah diinisialisasi atau remote sudah wujud, semak `git status` dan `git remote -v` dahulu. Gantikan NAMA_ANDA. Jangan masukkan token dalam URL. Gunakan login rasmi GitHub/Git credential manager.
-
-Commit secara berkala selepas kerja sebenar: dataset manifest, eksport model, eksperimen, pembaikan hasil ujian dan laporan. Jangan cipta tarikh sejarah, sumbangan ahli atau commit kosong untuk membayangkan kerja terdahulu. Jika berkumpulan, setiap ahli menggunakan identiti sendiri dan menjelaskan perubahan yang dibuat.
-
-Fail model binari dan gambar diabaikan oleh `.gitignore` bagi mengelakkan saiz besar serta perkongsian tidak sengaja. Penyerahan tetap memerlukan akses: kongsi dataset sah dan eksport E1/E2 melalui GitHub Release atau storan yang dibenarkan, kemudian isi pautan dalam model_registry.csv/dataset_sources.csv dan README. Atau ubah aturan ignore dan guna Git LFS jika sesuai. Jangan biarkan fail penting hanya di komputer anda.
-
-## Bukti minimum
-
-Simpan URL repository sebenar, screenshot sejarah commit, status API 200 dengan model sebenar, JSON sebenar, screenshot UI dan catatan persekitaran. Pastikan penilai mempunyai akses. Simpan video demo jika diminta pensyarah.
+Setiap ahli perlu menunjukkan commit atau bukti kerja sebenar. Gunakan akaun sendiri untuk kerja seterusnya; jangan ubah pengarang atau tarikh commit bagi mencipta gambaran sumbangan palsu. GitHub Actions memeriksa kod, dataset dan model selepas push.

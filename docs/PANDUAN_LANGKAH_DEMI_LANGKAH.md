@@ -1,3 +1,5 @@
+> Status selepas pembaikan 26 September 2026: rujuk ../evidence/VERIFIKASI_26SEPT.md. Catatan berikut dikekalkan sebagai sejarah/panduan proses.
+
 # Panduan lengkap projek DKA3223
 
 Panduan ini menyambungkan kehendak dokumen tugasan kepada 12 fasa dalam gambar. Mulakan dengan persediaan data kerana gambar menganggap model sudah dilatih. Kod siap berada dalam folder aplikasi, tetapi anda perlu melatih model menggunakan imej sebenar.

@@ -1,0 +1,2 @@
+﻿timestamp,experiment,source,mode,model,actual,top_class,prediction,confidence,threshold,correct,accepted_correct
+"2026-09-26T05:29:45.748Z","E2","049d99faa622b032.jpg","browser","/models/tfjs/","BOTOL","BOTOL","BOTOL","0.9999961853027344","0.7","true","true"

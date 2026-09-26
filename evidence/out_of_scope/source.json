@@ -1,0 +1,9 @@
+{
+  "file": "earth_nasa.jpg",
+  "title": "Blue Marble 2012",
+  "credit": "NASA/NOAA/GSFC/Suomi NPP/VIIRS/Norman Kuring",
+  "source": "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001386/GSFC_20171208_Archive_e001386~small.jpg",
+  "nasa_id": "GSFC_20171208_Archive_e001386",
+  "usage": "Educational out-of-scope inference check; excluded from training, validation and test accuracy",
+  "sha256": "6791d200aced713850c047a980e0d3b7d3984a7cbbd19ceb821b42a9dcd1b430"
+}

@@ -1,4 +1,16 @@
+> Status selepas pembaikan 26 September 2026: rujuk VERIFIKASI_26SEPT.md. Catatan berikut dikekalkan sebagai sejarah/panduan proses.
+
 # Keputusan ujian kod
+
+## Ulangan terkini — 24 September 2026
+
+Arahan: `.venv/Scripts/python.exe -m pytest -q -p no:cacheprovider --tb=short`.
+
+Ulangan selepas pemasangan model akhir E2: **18 passed, 9 warnings in 10.10s**. Ulangan terdahulu pada tarikh sama: 18 passed, 9 warnings in 44.17s. Amaran ialah deprecation Starlette/httpx, AnyIO dan TensorFlow Lite Interpreter. Ujian kontrak yang menggunakan test double tidak membuktikan accuracy model. Lima semakan HTTP model E2 sebenar direkod berasingan dalam live_api_checks.json.
+
+Dataset awam: `tools/check_dataset.py dataset_public` lulus: 50/50/10/10 setiap kelas untuk train_e1/train_e2/validation/test. E1/E2 berkongsi data latihan secara sengaja; tiada pendua tepat merentasi latihan dan holdout.
+
+## Rekod sejarah — sebelum pemasangan model asal
 
 Tarikh: 23 September 2026. Persekitaran: Windows, Python 3.12.14.
 

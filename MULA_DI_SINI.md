@@ -1,25 +1,11 @@
 # Mula di sini
 
-Projek kumpulan Muhammad Faris Bin Mohd Fuad, AIEREL dan HAIRIS. Kelas 2 DVM IPD. Pensyarah PN. NAZATUL BAHIYAH BINTI OTHMAN.
+Dataset, model E1/E2, aplikasi dan keputusan ujian telah tersedia. Anda tidak perlu mengulang latihan untuk menjalankan projek.
 
-## Apa yang telah disediakan
+1. Jalankan `SETUP.bat` menggunakan Python 3.12 64-bit.
+2. Jalankan `MULA.bat` dan buka http://127.0.0.1:8000.
+3. Tekan Muatkan model dan upload imej daripada dataset_public/test.
+4. Rujuk README untuk kedua-dua mod, endpoint API dan bukti eksperimen.
+5. Baca docs/SENARAI_SEMAK_PENYERAHAN.md dan latih jawapan dalam docs/SKRIP_DEMO_DAN_SOAL_JAWAB.md.
 
-Kod aplikasi dua mod (pelayar dan Python), panduan 12 fasa, backend FastAPI/Pydantic, skrip penilaian dan perbandingan E1/E2, ujian kod, draf laporan 10 muka surat dan slaid 12 halaman. Lapan belas ujian kod lulus.
-
-**Tindakan anda sekarang:** buka `docs/TINDAKAN_ANDA.md`. Utamakan gambar sebenar dan maklumat ahli yang belum lengkap. Saya boleh menyambung analisis serta melengkapkan hasil laporan selepas input tersebut tersedia.
-
-## Apa yang belum selesai
-
-Anda belum mempunyai dataset atau model. Kumpulkan gambar sebenar, latih E1/E2, uji pada imej berasingan, masukkan eksport model, isi keputusan serta bukti. Repository GitHub perlu diterbitkan melalui akaun anda. Sesi AI kedua dan nombor matrik AIEREL/HAIRIS masih perlu dilengkapkan. Pakej ini belum boleh dianggap penyerahan akhir.
-
-## Turutan tindakan
-
-1. Buka `docs/PANDUAN_LANGKAH_DEMI_LANGKAH.md`, mulakan Bahagian A.
-2. Ambil gambar BOTOL, BUKU dan TELEFON. Sasaran E1: 50 imej setiap kelas. E2: 100 imej setiap kelas termasuk E1. Asingkan tambahan 20 validation dan 20 test setiap kelas.
-3. Latih E1/E2 di Teachable Machine, simpan projek dan eksport.
-4. Ikut README untuk setup Python dan jalankan aplikasi.
-5. Masukkan URL model dalam aplikasi, uji webcam/imej dan eksport rekod CSV.
-6. Selesaikan Fasa 12 untuk inferens Python sebenar.
-7. Lengkapkan `docs/LAPORAN_SMARTVISION_DRAF.docx` dan `docs/PEMBENTANGAN_SMARTVISION.pptx` berdasarkan hasil sebenar.
-
-Dokumen dan slaid mengandungi [ISI] untuk perkara yang belum diketahui. Semua sasaran sampel dan parameter dinyatakan sebagai perancangan.
+Status terkini: evidence/VERIFIKASI_26SEPT.md. Laporan dan slaid tidak termasuk dalam pakej semasa. Sumbangan serta demo individu perlu disahkan oleh ahli sebenar.

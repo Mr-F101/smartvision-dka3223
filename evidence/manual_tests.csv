@@ -1,13 +1,15 @@
 id,scenario,expected,actual,status,evidence_file
-UI01,Load tanpa fail model,Mesej model belum tersedia,,NOT_RUN,
-UI02,Kamera dibenarkan,Preview dan ramalan sebenar,,NOT_RUN,
-UI03,Kamera ditolak,Mesej ralat dan boleh cuba semula,,NOT_RUN,
-UI04,Upload imej sah,Prediction dan confidence,,NOT_RUN,
-UI05,Fail rosak,Mesej ralat,,NOT_RUN,
-UI06,Reset,Kamera berhenti dan hasil dikosongkan,,NOT_RUN,
-UI07,Confidence bawah threshold,UNKNOWN,,NOT_RUN,
-UI08,Objek luar skop,Rekod jika model salah walaupun confidence tinggi,,NOT_RUN,
-API01,POST predict model sebenar,200 dan JSON,,NOT_RUN,
-API02,Fail kosong,400,,NOT_RUN,
-API03,Fail terlalu besar,413,,NOT_RUN,
-API04,Threshold di luar julat,422,,NOT_RUN,
+UI01,Load tanpa fail model,Mesej model belum tersedia,Laluan model tidak wujud menghasilkan ralat,PASS,UJIAN_MANUAL_24SEPT.md
+UI02,Kamera dibenarkan,Preview dan ramalan sebenar,Tiada stream fizikal; timeout 15 saat pulihkan kawalan upload,HARDWARE_NOT_VERIFIED,screenshots/camera_timeout_26sept.png
+UI03,Kamera ditolak,Mesej ralat dan boleh cuba semula,Penolakan disahkan dengan simulasi node; dialog fizikal tidak tersedia,SIMULATION_PASS,../tests/test_camera.cjs
+UI04,Upload imej sah,Prediction dan confidence,BOTOL 99.9996 peratus dalam TFJS,PASS,screenshots/demo_tfjs_botol.png
+UI05,Fail rosak,Mesej ralat,Source image cannot be decoded dan kawalan pulih,PASS,UJIAN_MANUAL_24SEPT.md
+UI06,Reset,Kamera berhenti dan hasil dikosongkan,Hasil dikosongkan dan permintaan kamera dibatalkan tetapi kamera hidup belum diuji,PARTIAL,UJIAN_MANUAL_24SEPT.md
+UI07,Confidence bawah threshold,UNKNOWN,UNKNOWN pada 70 peratus dan TELEFON pada 50 peratus,PASS,screenshots/demo_api_unknown.png
+UI08,Objek luar skop,Rekod jika model salah walaupun confidence tinggi,Bumi NASA diramal BOTOL 95.55% UI dan 96.70% API; had model direkod,PASS_LIMITATION_RECORDED,out_of_scope/api_result.json; screenshots/out_of_scope_26sept.png
+UI09,Eksport CSV,Fail CSV diterima,Fail Downloads/rekod-ujian (3).csv diterima dan kandungan disahkan,PASS,ui_export_26sept.csv
+API01,POST predict model sebenar,200 dan JSON,200 dan prediction BOTOL,PASS,live_api_checks.json
+API02,Fail kosong,400,400,PASS,live_api_checks.json
+API03,Fail terlalu besar,413,413,PASS,live_api_checks.json
+API04,Threshold di luar julat,422,422,PASS,live_api_checks.json
+API05,Fail rosak,400,400,PASS,live_api_checks.json

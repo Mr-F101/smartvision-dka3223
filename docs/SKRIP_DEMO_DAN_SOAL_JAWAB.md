@@ -1,5 +1,19 @@
 # Skrip demo dan persediaan soalan lisan
 
+## Fakta yang perlu disebut — 24 September 2026
+
+Dataset awam mempunyai 210 imej unik: 150 latihan, 30 validation dan 30 test. E1/E2 menggunakan 150 imej import sama; perubahan ialah 50 kepada 100 epoch, batch 16 dan learning rate 0.001 kekal. Random seed dan pembahagian dalaman TM tidak dikawal, jadi peningkatan tidak boleh dikaitkan dengan epoch sahaja.
+
+Validation E1 ialah 26/30 (86.67%), E2 27/30 (90.00%). Pilih E2 sebelum membuka keputusan test. Test E2 ialah 28/30 (93.33%); satu buku diramal telefon pada confidence 64.96% lalu UNKNOWN, dan satu telefon diramal buku pada 89.74%. Confidence bukan jaminan betul. Ambang 70% tidak mengesan semua objek asing.
+
+Model TFJS ialah eksport Teachable Machine sebenar. Model TFLite ditukar secara tempatan daripada eksport sama tanpa latihan semula; muat turun TFLite melalui panel TM tidak berjaya disahkan. Pautan model awam bukan URL deployment aplikasi.
+
+Untuk demo yang sudah diuji, pilih mod Pelayar, `/models/tfjs/`, eksperimen E2 dan upload `dataset_public/test/BOTOL/049d99faa622b032.jpg`. Untuk UNKNOWN dalam mod Python, gunakan `dataset_public/test/BUKU/33040e3951cc688c.jpg`; UI sekitar 62.22%, berbeza sedikit daripada batch kerana preprocessing. Pulihkan threshold kepada 70% selepas demonstrasi.
+
+## Latihan setiap ahli — belum dilakukan
+
+Faris, AIEREL dan HAIRIS perlu menjalankan demo sendiri. Dokumen ini ialah persediaan, bukan bukti mereka telah berlatih. Setiap ahli perlu menerangkan sumbangan sebenar, menjalankan kedua-dua mod, menunjukkan satu salah ramalan, menjawab tiga soalan di bawah dan mencatat masa serta masalah. Sahkan nama penuh/matrik sebelum penyerahan. CSV dan objek luar skop telah diuji pada 26 September. Kamera fizikal masih memerlukan semakan mesin demo; logik penolakan/henti/reset telah diuji secara simulasi. Rujuk evidence/VERIFIKASI_26SEPT.md.
+
 ## Demo individu sekitar 7 minit
 
 0:00–0:45: “Projek SmartVision mengklasifikasikan botol, buku dan telefon. Prototaip ini menggunakan Teachable Machine dan aplikasi web.” Terangkan masalah dan sumbangan sebenar anda.
@@ -45,3 +59,7 @@
 **GitHub:** menyimpan kod, sejarah perubahan dan bukti kerjasama. Commit mesti mewakili kerja sebenar dan tidak menyimpan rahsia.
 
 **Risiko AI Code Assistant:** kod mungkin salah, tidak serasi atau sukar difahami. Pelajar perlu membaca, menguji dan merekod bantuan dengan jujur.
+
+**Mengapa model tersalah mengklasifikasikan imej:** imej baharu mungkin berbeza daripada data latihan; latar, sudut, pencahayaan dan rupa antara kelas boleh mengelirukan, manakala overfitting mengurangkan generalisasi. Ini kemungkinan umum, bukan punca khusus yang telah dibuktikan bagi setiap kes. Contoh sebenar: satu telefon test diramal BUKU pada 89.74%. Imej Bumi di luar skop pula diramal BOTOL 96.70% melalui API, menunjukkan confidence tinggi tidak menjamin kelas betul.
+
+**Runtime terkini:** fail model kekal TFLite E2 yang sama; interpreter Python kini daripada Google LiteRT 2.2.0. Semua 90 ramalan regresi masih sepadan. Library JavaScript dan model disimpan tempatan untuk demo.
